@@ -5,3 +5,4 @@
 ## Week \#2
 - Adding metadata to AnnData
 - Identification of a sample (SS2_18_419) with high level of counted mitochondrial genes (83%)
+- Scrublet doublets detection moved at the beginning of the filtering
