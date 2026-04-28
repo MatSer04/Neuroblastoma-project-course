@@ -17,3 +17,7 @@
 - Filtering clusters that don't connect to the "hub"
 - Tree inference and pseudotime analysis
 - Building differentiation dendrogram
+## Week \#6
+- Discussion with Susanne
+- Filtering transcripts that are TSL5 or TSL4 and not MANE select
+- Calculating lncRNA ratio
