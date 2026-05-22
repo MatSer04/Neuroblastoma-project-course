@@ -20,4 +20,17 @@
 ## Week \#6
 - Discussion with Susanne
 - Filtering transcripts that are TSL5 or TSL4 and not MANE select
-- Calculating lncRNA ratio
+- Calculating ncRNA ratio - filtering ratio > 35%
+## Week \#7
+- Spatial expression around MYCN chromosomal region
+- New annotation (without 4S clusters)
+- New tree inference
+- New trajectory
+## Week \#8
+- Trying inferCNV
+- Building dendrogram
+- Moved 4S filtering to 00_preprocessing
+- Optimized filtering of TSL4/5 not MANE select filtering
+- Moved lncRNA filtering to 00_preprocessing
+  ## Week \#9
+- Started DIU
