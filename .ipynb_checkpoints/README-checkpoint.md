@@ -17,3 +17,26 @@
 - Filtering clusters that don't connect to the "hub"
 - Tree inference and pseudotime analysis
 - Building differentiation dendrogram
+## Week \#6
+- Discussion with Susanne
+- Filtering transcripts that are TSL5 or TSL4 and not MANE select
+- Calculating ncRNA ratio - filtering ratio > 35%
+## Week \#7
+- Spatial expression around MYCN chromosomal region
+- New annotation (without 4S clusters)
+- New tree inference
+- New trajectory
+## Week \#8
+- Trying inferCNV
+- Building dendrogram
+- Moved 4S filtering to 00_preprocessing
+- Optimized filtering of TSL4/5 not MANE select filtering
+- Moved lncRNA filtering to 00_preprocessing
+  ## Week \#9
+- Started DIU
+  ## Week \#10
+- Slight changes to annotation
+- Preparing figures for presentation and report
+  ## Week \#11
+- Writing report
+- Cleaning the Jupyter Notebook

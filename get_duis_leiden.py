@@ -6,38 +6,45 @@ import tqdm
 import os
 
 # Import isoform_tools
-exec(open(f"C:/Users/Felix/Desktop/vs_code/translational_control/tools/isoform_tools.py").read())
-
-DATA_PATH="C:/Users/Felix/Desktop/vs_code/translational_control/data"
-
-adata=sc.read(f"{DATA_PATH}/adata_thresholded.h5ad")
+exec(open("/home/matei/Neuroblastoma-project-course/isoform_tools.py").read())
 
 
-# Filter on isoform count.
-# Read keep isoforms
-with open("C:/Users/Felix/Desktop/vs_code/translational_control/information_content/keep_isoforms.txt", "r") as f:
-    list_ = f.readlines()
+adata = sc.read("/home/matei/data/adata_neuroblastoma_assigned.h5ad")
 
-keep=[]
-for x in list_:
-    keep.append(x[:-1])
+# Removing unwanted clusters
+adata=adata[~adata.obs.leiden.isin(["7","10","11","6","11","8"])]
 
-# Need to redo keep because it was calculated on adata_preprocessed
-keep_new = []
-for x in tqdm.tqdm(keep):
-    if x in adata.var_names.tolist():
-        keep_new.append(x)
-adata = adata[:,keep_new]
+######### Filter based on total isoform expression ##########
+# Calculate expr per isoform
+expr = np.asarray(adata.X.sum(axis=0)).ravel()
+df = pd.DataFrame({
+    "transcript": adata.var["transcript"].values,
+    "expr": expr
+})
+sum_iex = df.groupby("transcript")["expr"].sum().to_dict()
 
+# Filter iso <30 expr
+iso_to_keep = df.transcript[df["expr"]>30].tolist()
+adata = adata[:, adata.var["transcript"].isin(iso_to_keep)]
 
+######### Filter based on isoform number (<1) ##########
+gene_list = adata.var["gene"].unique().tolist()
+multi_iso = []
+
+for gene in tqdm.tqdm(gene_list):
+    n_iso = len(adata.var[adata.var["gene"]==gene])
+    #print(f"n_iso:{n_iso}")
+    if n_iso > 1:
+        multi_iso.append(gene)
+adata = adata[:, adata.var["gene"].isin(multi_iso)]
 
 
 dui = find_isoforms(adata,
                     group_by="leiden",
-                    threshold_var = 0.004, # adjust according to variance distribution notebook
+                    threshold_var = 0.003, # adjust according to variance distribution notebook
                     gene_name_col="gene",
                     transcript_name_col="transcript",
-                    threshold_abund_absolute = 100 # Lower incrementaly after inspection of DUI solo isoforms
+                    threshold_abund_absolute = 30 # Lower incrementaly after inspection of DUI solo isoforms
                    )
 
 save_directory="dui"
@@ -45,4 +52,4 @@ if not os.path.exists(save_directory):
     os.makedirs(save_directory)
 
 # Save
-dui.to_csv(f"{save_directory}/dui_leiden.csv")
+dui.to_csv("/home/matei/data/dui_leiden_filter30.csv")

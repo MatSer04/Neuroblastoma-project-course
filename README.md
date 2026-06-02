@@ -34,3 +34,9 @@
 - Moved lncRNA filtering to 00_preprocessing
   ## Week \#9
 - Started DIU
+  ## Week \#10
+- Slight changes to annotation
+- Preparing figures for presentation and report
+  ## Week \#11
+- Writing report
+- Cleaning the Jupyter Notebook
